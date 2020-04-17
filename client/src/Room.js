@@ -14,9 +14,20 @@ class Room extends React.Component{
       }
     
       componentDidMount(){
+        const {name} = this.props.match.params;
+
         // make connection between this client and the server (which is active on port 5000)
         socket = io_client("http://localhost:5000");
+
+        // allow this socket to join the room
+        socket.emit("join", {name});
     
+        // when receiv welcome, then has joined room, so redirect
+        socket.on("welcome", data => {
+          console.log(data);
+          //this.props.history.push(`/room/${data.name}`)
+        })
+
         // listen for when the server sends a new message that some client sent
         socket.on("message", data => {
           console.log(data);

@@ -14,12 +14,6 @@ class Home extends React.Component{
     componentDidMount(){
         // make connection between this client and the server (which is active on port 5000)
         socket = io_client("http://localhost:5000");
-
-        // when receiv welcome, then has joined room, so redirect
-        socket.on("welcome", data => {
-            console.log(data);
-            this.props.history.push(`/room/${data.name}`)
-        })
     }
 
     onChange = evt => this.setState({[evt.target.id]: evt.target.value});
@@ -28,7 +22,7 @@ class Home extends React.Component{
         const {roomName} = this.state;
 
         // tell socket to create new channel
-        socket.emit("join", {name: roomName});
+        this.props.history.push(`/room/${roomName}`)
     }
 
     render(){

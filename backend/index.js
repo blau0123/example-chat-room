@@ -39,9 +39,10 @@ io.on("connection", socket => {
     // listen for when a client sends a new message
     socket.on("message", data => {
         // emit to all sockets connected to the server room that there was a new message
-        console.log(data.name);
-        io.sockets.in(data.name).emit("message", data);
+        console.log(data);
+        //io.sockets.in(data.name).emit("message", data);
         //socket.to(data.name).emit("message", data)
+        io.in(data.name).emit("message", data);
     })
 
     socket.on("disconnect", () => {
